@@ -6,6 +6,7 @@ from fastapi import Depends, HTTPException
 from datetime import datetime
 from src.utils import is_valid_uuid4
 
+
 db_dependency = Annotated[AsyncSession, Depends(get_async_session)]
 
 
@@ -33,3 +34,8 @@ async def validate_admin_key(admin_key: str, db: db_dependency) -> User:
         return user
     else:
         raise HTTPException(status_code=401, detail="License key is not valid or expired")
+
+
+validate_admin_key_dependency = Annotated[User, Depends(validate_admin_key)]
+validate_license_key_dependency = Annotated[User, Depends(validate_license_key)]
+
