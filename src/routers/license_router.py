@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from src.database import User
 from src.dependencies import db_dependency, validate_license_key, validate_admin_key
-from src.routers.models import CreateUserPayload
+from src.routers.models import CreateUserPayload, CheckLicenseResponseModel, CreateUserResponseModel
 
 check_license_router = APIRouter(
     prefix='/license',
@@ -12,13 +12,13 @@ check_license_router = APIRouter(
 
 
 @check_license_router.get("/check_license")
-async def check_license(license_key: str, user: User = Depends(validate_license_key)):
-    return {"valid": True}
+async def check_license(license_key: str, user: User = Depends(validate_license_key)) -> CheckLicenseResponseModel:
+    return CheckLicenseResponseModel()
 
 
 @check_license_router.post("/create_user")
 async def create_user(admin_key: str, payload: CreateUserPayload, db: db_dependency,
-                      admin: User = Depends(validate_admin_key)):
+                      admin: User = Depends(validate_admin_key)) -> CreateUserResponseModel:
     result = await db.execute(select(User).filter(User.username == payload.username))
     existing_user = result.scalars().first()
     if existing_user:
@@ -37,4 +37,5 @@ async def create_user(admin_key: str, payload: CreateUserPayload, db: db_depende
     db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
-    return {"id": new_user.id, "username": new_user.username, "key": new_user.licence_key}
+    return CreateUserResponseModel(username=new_user.username,
+                                   licence_key=new_user.licence_key)
