@@ -29,11 +29,11 @@ async def validate_admin_key(admin_key: str, db: db_dependency) -> User:
     if user.role_id != 1:
         raise HTTPException(status_code=403, detail="User is not an admin")
     if user is None:
-        raise HTTPException(status_code=404, detail="License key not found")
+        raise HTTPException(status_code=404, detail="Admin license key not found")
     if user.license_time and user.license_time > datetime.utcnow():
         return user
     else:
-        raise HTTPException(status_code=401, detail="License key is not valid or expired")
+        raise HTTPException(status_code=401, detail="Admin license key is not valid or expired")
 
 
 validate_admin_key_dependency = Annotated[User, Depends(validate_admin_key)]
