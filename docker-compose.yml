@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    container_name: license_apies
+    command: ["/app/docker/app.sh"]
+    ports:
+      - 8100:8000
+
