@@ -9,4 +9,3 @@ services:
     command: ["/app/docker/app.sh"]
     ports:
       - 8100:8000
-
