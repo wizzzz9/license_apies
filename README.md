@@ -69,6 +69,18 @@ This project provides a simple API for managing licenses using FastAPI, PostgreS
 - `admin_key` (str): The admin key for authentication.
 - `payload` (CreateUserPayload): The payload containing user details.
 
+
+### Renew License
+
+**Endpoint**: `/api/license/renew_license`  
+**Method**: `POST`
+
+**Description**: Renew a license.
+
+**Request Body**:
+- `admin_key` (str): The admin key for authentication.
+- `payload` (RenewLicensePayload): The payload containing user details.
+
 **Response**:
 - **200 OK**: User created successfully.
 - **400 Bad Request**: Username already exists.
@@ -91,6 +103,13 @@ class CreateUserPayload(BaseModel):
 class CheckLicenseResponseModel(BaseModel):
     valid: bool
     expiry_date: Optional[datetime] = None
+```
+
+### RenewLicensePayload
+```python
+class RenewLicensePayload(BaseModel):
+    user_licence_key: str
+    license_time: datetime = None # None == utcnow + 30 days
 ```
 
 ### CreateUserResponseModel
