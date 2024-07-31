@@ -1,5 +1,4 @@
 from typing import Any, List
-
 from pydantic import PostgresDsn, RedisDsn, model_validator
 from pydantic_settings import BaseSettings
 

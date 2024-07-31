@@ -1,10 +1,5 @@
-import time
 from datetime import datetime
-
 from pydantic import BaseModel
-
-
-
 
 
 class CreateUserPayload(BaseModel):
@@ -12,9 +7,12 @@ class CreateUserPayload(BaseModel):
     license_time: datetime = None
     user_info: str = None
     role_id: int = 3
+
+
 class RenewLicensePayload(BaseModel):
     user_licence_key: str
     license_time: datetime = None
+
 
 class CheckLicenseResponseModel(BaseModel):
     status: bool = True
@@ -29,6 +27,3 @@ class RenewLicenseResponseModel(BaseModel):
 class CreateUserResponseModel(BaseModel):
     username: str
     licence_key: str
-
-
-

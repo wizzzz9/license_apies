@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
 from src.database import User
-from src.dependencies import db_dependency, validate_license_key, validate_admin_key, validate_admin_key_dependency, \
+from src.dependencies import db_dependency, validate_admin_key_dependency, \
     validate_license_key_dependency
 from src.routers.models import CreateUserPayload, CheckLicenseResponseModel, CreateUserResponseModel, \
     RenewLicensePayload, RenewLicenseResponseModel
