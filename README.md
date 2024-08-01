@@ -24,22 +24,19 @@ This project provides a simple API for managing licenses using FastAPI, PostgreS
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/license-management-api.git
-   cd license-management-api
+   git clone https://github.com/wizzzz9/license_apies
+   cd license_apies
    ```
 
 2. **Set up Docker**
 
-   soon...
-
-3. **Apply database migrations**
-
-      soon...
+   docker-compose build
+   docker-compose up
 
 
 ## Usage
 
-   soon...
+   host:port/docs or you can use nginx and use some domain
 
 
 ## API Endpoints
