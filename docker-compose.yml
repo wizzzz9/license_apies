@@ -8,4 +8,4 @@ services:
     container_name: license_apies
     command: ["/app/docker/app.sh"]
     ports:
-      - 8100:8000
+      - 8150:8000

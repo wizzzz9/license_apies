@@ -1,11 +1,16 @@
 from typing import Any, List
 from pydantic import PostgresDsn, RedisDsn, model_validator
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from src.constants import Environment
 
 
 class Config(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
+
+
     REDIS_URL: str = ""
     ENVIRONMENT: Environment = Environment.PRODUCTION
     # SENTRY_DSN: str = None
