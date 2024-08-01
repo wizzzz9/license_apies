@@ -11,3 +11,6 @@ services:
       - 8100:8000
     volumes:
       - portainer-compose-unpacker:/app
+
+volumes:
+  portainer-compose-unpacker:
