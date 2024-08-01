@@ -4,7 +4,7 @@ services:
     build:
       context: .
     env_file:
-      - ../.env
+      - ../stack.env
     container_name: license_apies
     command: ["/app/docker/app.sh"]
     ports:
