@@ -4,13 +4,13 @@ services:
     build:
       context: .
     env_file:
-      - .env
+      - ../.env
     container_name: license_apies
     command: ["/app/docker/app.sh"]
     ports:
       - 8100:8000
-    volumes:
-      - portainer-compose-unpacker:/app
-
-volumes:
-  portainer-compose-unpacker:
+#    volumes:
+#      - portainer-compose-unpacker:/app
+#
+#volumes:
+#  portainer-compose-unpacker:
