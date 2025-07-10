@@ -6,9 +6,7 @@ from src.constants import Environment
 
 
 class Config(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", extra="ignore"
-    )
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 
     REDIS_URL: str = ""
@@ -27,9 +25,7 @@ class Config(BaseSettings):
     DB_PASS: str
     DB_TYPE: str = "postgres"
 
-    class Config:
-        env_file = '.env'
-        extra = 'ignore'
+
     # @model_validator(mode="after")
     # def validate_sentry_non_local(self) -> "Config":
     #     if self.ENVIRONMENT.is_deployed and not self.SENTRY_DSN:

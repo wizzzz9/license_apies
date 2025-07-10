@@ -14,13 +14,14 @@ from sqlalchemy import (
     NullPool,
 )
 from sqlalchemy.dialects.postgresql import UUID
-
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from src.config import DATABASE_URL
 
+
 Base = declarative_base()
 metadata = MetaData()
+
 
 engine = create_async_engine(DATABASE_URL, pool_pre_ping=True, poolclass=NullPool)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
