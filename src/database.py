@@ -43,7 +43,7 @@ class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     username = Column(String, nullable=False, unique=True)
-    licence_key = Column(UUID(as_uuid=True), default=uuid.uuid4, nullable=False)
+    license_key = Column(UUID(as_uuid=True), default=uuid.uuid4, nullable=False)
     license_time = Column(DateTime, nullable=True)
     user_info = Column(String, nullable=True)
     role_id = Column(Integer, ForeignKey('role.id'), nullable=False, default=3)

@@ -1,5 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
+from uuid import UUID
+
 
 
 class CreateUserPayload(BaseModel):
@@ -10,7 +12,7 @@ class CreateUserPayload(BaseModel):
 
 
 class RenewLicensePayload(BaseModel):
-    user_licence_key: str
+    user_license_key: str
     license_time: datetime = None
 
 
@@ -26,4 +28,4 @@ class RenewLicenseResponseModel(BaseModel):
 
 class CreateUserResponseModel(BaseModel):
     username: str
-    licence_key: str
+    license_key: str | UUID

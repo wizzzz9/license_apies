@@ -12,7 +12,7 @@ db_dependency = Annotated[AsyncSession, Depends(get_async_session)]
 
 async def validate_license_key(license_key: str, db: db_dependency) -> User:
     await is_valid_uuid4(uuid_string=license_key)
-    result = await db.execute(select(User).filter(User.licence_key == license_key))
+    result = await db.execute(select(User).filter(User.license_key == license_key))
     user = result.scalars().first()
     if user is None:
         raise HTTPException(status_code=404, detail="License key not found")
@@ -24,7 +24,7 @@ async def validate_license_key(license_key: str, db: db_dependency) -> User:
 
 async def validate_admin_key(admin_key: str, db: db_dependency) -> User:
     await is_valid_uuid4(uuid_string=admin_key)
-    result = await db.execute(select(User).filter(User.licence_key == admin_key))
+    result = await db.execute(select(User).filter(User.license_key == admin_key))
     user = result.scalars().first()
     if user.role_id != 1:
         raise HTTPException(status_code=403, detail="User is not an admin")

@@ -28,6 +28,9 @@ async def create_user(payload: CreateUserPayload, db: db_dependency,
     if payload.license_time is None:
         payload.license_time = datetime.utcnow() + timedelta(days=30)
 
+    if payload.license_time.tzinfo is not None:
+        payload.license_time = payload.license_time.replace(tzinfo=None)
+
     new_user = User(
         username=payload.username,
         license_time=payload.license_time,
@@ -39,14 +42,14 @@ async def create_user(payload: CreateUserPayload, db: db_dependency,
     await db.commit()
     await db.refresh(new_user)
     return CreateUserResponseModel(username=new_user.username,
-                                   licence_key=new_user.licence_key)
+                                   license_key=new_user.license_key)
 
 
 @check_license_router.post("/renew_license", description="If license_time is None it will automatically set utcnow + 30 days")
 async def renew_license(payload: RenewLicensePayload, db: db_dependency,
                         admin: validate_admin_key_dependency
                         ) -> RenewLicenseResponseModel:
-    result = await db.execute(select(User).filter(User.licence_key == payload.user_licence_key))
+    result = await db.execute(select(User).filter(User.license_key == payload.user_license_key))
     user = result.scalars().first()
 
     if not user:
@@ -56,7 +59,14 @@ async def renew_license(payload: RenewLicensePayload, db: db_dependency,
         user.license_time = datetime.utcnow() + timedelta(days=30)
     else:
         user.license_time = payload.license_time
+
+    if payload.license_time and payload.license_time.tzinfo is not None:
+        payload.license_time = payload.license_time.replace(tzinfo=None)
+        user.license_time = payload.license_time
+
+
+
     db.add(user)
     await db.commit()
     await db.refresh(user)
-    return RenewLicenseResponseModel(valid=True, expiry_license=user.license_time)
+    return RenewLicenseResponseModel(valid=True, expiry_license=user.license_time, username=user.username)
